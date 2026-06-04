@@ -1,0 +1,634 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap');
+
+  :root {
+    --red: #B01E2C;
+    --dark-red: #8B1520;
+    --gold: #C9922A;
+    --text: #222;
+    --muted: #555;
+    --light-bg: #f7f4f0;
+  }
+
+  .site { font-family: 'Lato', sans-serif; color: var(--text); background: #fff; }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    padding: 7px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar a { color: #fff; text-decoration: none; margin-right: 18px; }
+  .topbar-socials { display: flex; gap: 10px; }
+  .topbar-socials i { font-size: 15px; cursor: pointer; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon {
+    width: 56px; height: 56px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 1.2;
+    letter-spacing: 0.5px;
+  }
+  .logo-text { font-family: 'Playfair Display', serif; }
+  .logo-text strong { font-size: 22px; color: var(--red); display: block; letter-spacing: 2px; }
+  .logo-text span { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a {
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #333;
+    text-decoration: none;
+    padding: 6px 10px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-links a.active { border-bottom: 2px solid var(--red); }
+  .nav-links .has-arrow::after { content: ' ▾'; font-size: 10px; }
+  .btn-book {
+    background: var(--red);
+    color: #fff !important;
+    padding: 9px 20px !important;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    margin-left: 6px;
+  }
+  .btn-book:hover { background: var(--dark-red) !important; color: #fff !important; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 440px;
+    overflow: hidden;
+    background: #1a2e1a;
+  }
+  .hero-slides { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease; }
+  .hero-slide {
+    width: 33.333%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .slide-1 { background: linear-gradient(135deg, #1a3a1a 0%, #2d5a20 40%, #4a7a35 70%, #1a3a1a 100%); }
+  .slide-2 { background: linear-gradient(135deg, #1a2040 0%, #2040a0 40%, #4060c0 70%, #102030 100%); }
+  .slide-3 { background: linear-gradient(135deg, #3a1a0a 0%, #8a4020 40%, #c06030 70%, #3a1a0a 100%); }
+
+  /* Elephant silhouettes for slide 1 */
+  .elephant-group { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-content {
+    background: rgba(0,0,0,0.52);
+    color: #fff;
+    padding: 32px 48px;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0.5px;
+  }
+  .hero-nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+  }
+  .hero-nav-btn:hover { background: rgba(255,255,255,0.35); }
+  .hero-prev { left: 16px; }
+  .hero-next { right: 16px; }
+  .hero-dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+  .hero-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s;
+  }
+  .hero-dot.active { background: var(--red); }
+
+  /* Destination section */
+  .section { padding: 48px 24px; }
+  .section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    color: var(--text);
+  }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .dest-card {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .dest-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+  .dest-img {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .dest-img-1 { background: linear-gradient(160deg, #2d4a10 0%, #4a7820 40%, #6a9a30 70%, #3a6010 100%); }
+  .dest-img-2 { background: linear-gradient(160deg, #1a3010 0%, #2a5015 40%, #4a7025 70%, #1a3010 100%); }
+  .dest-img-3 { background: linear-gradient(160deg, #3a2008 0%, #6a4010 40%, #9a6825 70%, #3a2008 100%); }
+
+  /* Animal silhouettes */
+  .dest-animal { position: absolute; bottom: 10px; right: 12px; opacity: 0.85; }
+  .dest-label {
+    padding: 14px 16px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .dest-label span { color: var(--red); font-size: 18px; }
+
+  /* Features strip */
+  .features-strip {
+    background: var(--light-bg);
+    padding: 36px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .feature {
+    text-align: center;
+    max-width: 160px;
+  }
+  .feature i { font-size: 36px; color: var(--red); margin-bottom: 10px; display: block; }
+  .feature h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .feature p { font-size: 12px; color: var(--muted); }
+
+  /* Safari packages */
+  .pkg-section { padding: 48px 24px; background: var(--light-bg); }
+  .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .pkg-card {
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+    transition: transform 0.2s;
+  }
+  .pkg-card:hover { transform: translateY(-3px); }
+  .pkg-img {
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pkg-img-1 { background: linear-gradient(180deg, #1a3a1a 0%, #4a8a30 100%); }
+  .pkg-img-2 { background: linear-gradient(180deg, #101a30 0%, #1a4a8a 100%); }
+  .pkg-img-3 { background: linear-gradient(180deg, #2a1a08 0%, #8a5a20 100%); }
+  .pkg-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pkg-body { padding: 16px; }
+  .pkg-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .pkg-body p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .pkg-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .pkg-price { font-size: 16px; font-weight: 700; color: var(--red); }
+  .btn-details {
+    display: block;
+    text-align: center;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    transition: background 0.2s;
+  }
+  .btn-details:hover { background: var(--dark-red); }
+
+  /* Footer */
+  footer {
+    background: #111;
+    color: #ccc;
+    padding: 40px 24px 20px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto 32px;
+  }
+  footer h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  footer p, footer li { font-size: 13px; line-height: 1.8; }
+  footer ul { list-style: none; }
+  footer ul li a { color: #aaa; text-decoration: none; font-size: 13px; }
+  footer ul li a:hover { color: var(--gold); }
+  .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; color: #fff; letter-spacing: 2px; margin-bottom: 8px; }
+  .footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .whatsapp-fab {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    width: 50px; height: 50px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 999;
+  }
+  .whatsapp-fab i { font-size: 26px; color: #fff; }
+</style>
+
+<div class="site">
+  <h2 class="sr-only" style="position:absolute;left:-9999px">Eugen Tanzania Safaris — Africa wildlife tour operator website</h2>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>
+      <a href="#"><i class="ti ti-phone" aria-hidden="true"></i> +255 762 268 845</a>
+      <a href="#"><i class="ti ti-phone" aria-hidden="true"></i> +255 679 268 845</a>
+      <a href="#"><i class="ti ti-mail" aria-hidden="true"></i> info@eugentanzaniasafaris.com</a>
+    </div>
+    <div class="topbar-socials">
+      <i class="ti ti-brand-facebook" aria-hidden="true"></i>
+      <i class="ti ti-brand-twitter" aria-hidden="true"></i>
+      <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+      <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <div class="logo-icon">EU<br>GEN</div>
+      <div class="logo-text">
+        <strong>EUGEN</strong>
+        <span>Tanzania Safaris Limited</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">About Us</a>
+      <a href="#" class="has-arrow">Destinations</a>
+      <a href="#">Day Trips</a>
+      <a href="#">Safari Packages</a>
+      <a href="#" class="has-arrow">More</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact Us</a>
+      <a href="#" class="btn-book">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-slides" id="heroSlides">
+      <div class="hero-slide slide-1">
+        <svg style="position:absolute;bottom:40px;left:0;width:100%;height:200px;opacity:0.7" viewBox="0 0 800 200">
+          <ellipse cx="180" cy="160" rx="60" ry="30" fill="#2a5010"/>
+          <ellipse cx="320" cy="155" rx="80" ry="35" fill="#1e3a0c"/>
+          <ellipse cx="520" cy="162" rx="70" ry="28" fill="#2a5010"/>
+          <!-- Elephant 1 -->
+          <g transform="translate(130,80)">
+            <ellipse cx="0" cy="50" rx="32" ry="24" fill="#4a4a3a"/>
+            <circle cx="0" cy="22" r="18" fill="#4a4a3a"/>
+            <rect x="-8" y="70" width="10" height="28" rx="4" fill="#3a3a2a"/>
+            <rect x="4" y="70" width="10" height="28" rx="4" fill="#3a3a2a"/>
+            <path d="M-10 30 Q-30 50 -20 70" stroke="#4a4a3a" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M16 18 Q30 10 28 24" stroke="#3a3a2a" stroke-width="3" fill="none"/>
+          </g>
+          <!-- Elephant 2 (baby) -->
+          <g transform="translate(240,100)">
+            <ellipse cx="0" cy="38" rx="20" ry="16" fill="#5a5a4a"/>
+            <circle cx="0" cy="18" r="12" fill="#5a5a4a"/>
+            <rect x="-5" y="52" width="7" height="20" rx="3" fill="#4a4a3a"/>
+            <rect x="3" y="52" width="7" height="20" rx="3" fill="#4a4a3a"/>
+            <path d="M-6 22 Q-18 36 -12 52" stroke="#5a5a4a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Elephant 3 -->
+          <g transform="translate(380,75)">
+            <ellipse cx="0" cy="55" rx="38" ry="28" fill="#3a3a2a"/>
+            <circle cx="0" cy="24" r="22" fill="#3a3a2a"/>
+            <rect x="-10" y="80" width="12" height="32" rx="5" fill="#2a2a1a"/>
+            <rect x="6" y="80" width="12" height="32" rx="5" fill="#2a2a1a"/>
+            <path d="M-12 35 Q-36 58 -26 80" stroke="#3a3a2a" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M18 20 Q36 10 34 26" stroke="#2a2a1a" stroke-width="4" fill="none"/>
+          </g>
+        </svg>
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <h1>Explore Africa's<br>Wildest Spot</h1>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide slide-2">
+       <!-- <svg style="position:absolute;bottom:30px;left:0;width:100%;height:220px;opacity:0.75" viewBox="0 0 800 220">
+          <path d="M0 180 Q200 140 400 160 Q600 180 800 150 L800 220 L0 220 Z" fill="#1a3060"/>
+           Kilimanjaro 
+          <polygon points="400,20 300,180 500,180" fill="#4060a0"/>
+          <polygon points="400,20 360,80 440,80" fill="#e8eaee"/>
+            </svg>-->
+            <img src="cover.webp"  style="position:absolute;bottom:30px;left:0;width:100%;height:220px;opacity:0.75" alt="Kilimanjaro">
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <h1>Conquer<br>Kilimanjaro</h1>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide slide-3">
+        <svg style="position:absolute;bottom:20px;left:0;width:100%;height:240px;opacity:0.7" viewBox="0 0 800 240">
+          <ellipse cx="400" cy="200" rx="350" ry="60" fill="#6a3010"/>
+          <!-- Lion silhouette -->
+          <g transform="translate(320,80)">
+            <circle cx="60" cy="30" r="26" fill="#3a1a08"/>
+            <circle cx="60" cy="28" r="18" fill="#5a3010"/>
+            <ellipse cx="55" cy="65" rx="36" ry="22" fill="#3a1a08"/>
+            <rect x="36" y="82" width="12" height="40" rx="5" fill="#2a1008"/>
+            <rect x="62" y="82" width="12" height="40" rx="5" fill="#2a1008"/>
+            <path d="M88 70 Q110 55 118 80" stroke="#2a1008" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <h1>Witness the<br>Great Migration</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="hero-nav-btn hero-prev" onclick="changeSlide(-1)" aria-label="Previous slide">‹</button>
+    <button class="hero-nav-btn hero-next" onclick="changeSlide(1)" aria-label="Next slide">›</button>
+    <div class="hero-dots">
+      <div class="hero-dot active" onclick="goSlide(0)"></div>
+      <div class="hero-dot" onclick="goSlide(1)"></div>
+      <div class="hero-dot" onclick="goSlide(2)"></div>
+    </div>
+  </div>
+
+  <!-- DESTINATIONS -->
+  <div class="section">
+    <h2 class="section-title">Choose Your Destination</h2>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <div class="dest-img dest-img-1">
+          <svg class="dest-animal" viewBox="0 0 80 60" width="80" height="60">
+            <g fill="#1a3010" opacity="0.9">
+              <circle cx="55" cy="22" r="12"/>
+              <ellipse cx="50" cy="36" rx="18" ry="12"/>
+              <rect x="38" y="45" width="7" height="16" rx="3"/>
+              <rect x="52" y="45" width="7" height="16" rx="3"/>
+              <path d="M38 28 Q24 38 28 50" stroke="#1a3010" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dest-label">Serengeti National Park <span>›</span></div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-img dest-img-2">
+          <svg class="dest-animal" viewBox="0 0 80 60" width="80" height="60">
+            <g fill="#1a3010" opacity="0.85">
+              <circle cx="50" cy="18" r="10"/>
+              <ellipse cx="44" cy="32" rx="16" ry="10"/>
+              <rect x="34" y="40" width="6" height="14" rx="3"/>
+              <rect x="46" y="40" width="6" height="14" rx="3"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dest-label">Ngorongoro Crater <span>›</span></div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-img dest-img-3">
+          <svg class="dest-animal" viewBox="0 0 80 60" width="80" height="60">
+            <g fill="#3a1808" opacity="0.9">
+              <circle cx="52" cy="18" r="12"/>
+              <ellipse cx="46" cy="34" rx="20" ry="14"/>
+              <rect x="33" y="46" width="9" height="18" rx="4"/>
+              <rect x="52" y="46" width="9" height="18" rx="4"/>
+              <path d="M63 28 Q76 22 74 34" stroke="#2a1008" stroke-width="3" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div class="dest-label">Tarangire National Park <span>›</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features-strip">
+    <div class="feature">
+      <i class="ti ti-shield-check" aria-hidden="true"></i>
+      <h3>Safe & Secure</h3>
+      <p>Licensed guides & vetted operators</p>
+    </div>
+    <div class="feature">
+      <i class="ti ti-trophy" aria-hidden="true"></i>
+      <h3>Award Winning</h3>
+      <p>Tripadvisor Certificate of Excellence</p>
+    </div>
+    <div class="feature">
+      <i class="ti ti-users" aria-hidden="true"></i>
+      <h3>Expert Guides</h3>
+      <p>Knowledgeable local wildlife experts</p>
+    </div>
+    <div class="feature">
+      <i class="ti ti-headset" aria-hidden="true"></i>
+      <h3>24/7 Support</h3>
+      <p>We're with you every step of the way</p>
+    </div>
+  </div>
+
+  <!-- SAFARI PACKAGES -->
+  <div class="pkg-section">
+    <h2 class="section-title">Popular Safari Packages</h2>
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-img pkg-img-1">
+          <div class="pkg-badge">Best Seller</div>
+          <svg style="position:absolute;bottom:8px;right:12px;opacity:0.7" viewBox="0 0 60 50" width="60" height="50">
+            <circle cx="38" cy="15" r="10" fill="#4a8a30"/>
+            <ellipse cx="33" cy="28" rx="16" ry="10" fill="#3a7020"/>
+            <rect x="24" y="36" width="7" height="14" rx="3" fill="#2a5010"/>
+            <rect x="36" y="36" width="7" height="14" rx="3" fill="#2a5010"/>
+          </svg>
+        </div>
+        <div class="pkg-body">
+          <h3>3-Day Serengeti & Ngorongoro</h3>
+          <p>Witness the Great Migration and explore the stunning Ngorongoro Crater — a UNESCO World Heritage Site.</p>
+          <div class="pkg-meta">
+            <span><i class="ti ti-clock" aria-hidden="true"></i> 3 days</span>
+            <span><i class="ti ti-users" aria-hidden="true"></i> Max 6</span>
+            <span class="pkg-price">From $850</span>
+          </div>
+          <button class="btn-details" onclick="sendPrompt('Tell me more about the 3-Day Serengeti & Ngorongoro safari package')">View Details ↗</button>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-img pkg-img-2">
+          <div class="pkg-badge">Adventure</div>
+          <svg style="position:absolute;bottom:8px;right:12px;opacity:0.65" viewBox="0 0 60 60" width="60" height="60">
+            <polygon points="30,5 15,50 45,50" fill="#3060a0"/>
+            <polygon points="30,5 22,22 38,22" fill="#d0d8e8"/>
+          </svg>
+        </div>
+        <div class="pkg-body">
+          <h3>7-Day Kilimanjaro Climb</h3>
+          <p>Summit Africa's highest peak via the scenic Lemosho Route, with experienced certified mountain guides.</p>
+          <div class="pkg-meta">
+            <span><i class="ti ti-clock" aria-hidden="true"></i> 7 days</span>
+            <span><i class="ti ti-users" aria-hidden="true"></i> Max 8</span>
+            <span class="pkg-price">From $2,100</span>
+          </div>
+          <button class="btn-details" onclick="sendPrompt('Tell me more about the 7-Day Kilimanjaro Climb package')">View Details ↗</button>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-img pkg-img-3">
+          <div class="pkg-badge">Popular</div>
+          <svg style="position:absolute;bottom:8px;right:12px;opacity:0.7" viewBox="0 0 60 50" width="60" height="50">
+            <circle cx="40" cy="14" r="11" fill="#8a5020"/>
+            <ellipse cx="34" cy="30" rx="18" ry="12" fill="#6a3a10"/>
+            <rect x="22" y="40" width="9" height="18" rx="4" fill="#4a2808"/>
+            <rect x="40" y="40" width="9" height="18" rx="4" fill="#4a2808"/>
+            <path d="M48 26 Q58 18 56 30" stroke="#3a1808" stroke-width="3" fill="none"/>
+          </svg>
+        </div>
+        <div class="pkg-body">
+          <h3>5-Day Big Five Safari</h3>
+          <p>Spot the legendary lion, leopard, elephant, buffalo, and rhino across Tanzania's finest game reserves.</p>
+          <div class="pkg-meta">
+            <span><i class="ti ti-clock" aria-hidden="true"></i> 5 days</span>
+            <span><i class="ti ti-users" aria-hidden="true"></i> Max 6</span>
+            <span class="pkg-price">From $1,350</span>
+          </div>
+          <button class="btn-details" onclick="sendPrompt('Tell me more about the 5-Day Big Five Safari package')">View Details ↗</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-text">EUGEN</div>
+        <p style="font-size:12px;line-height:1.8;color:#aaa;">Tanzania Safaris Limited — your trusted partner for unforgettable African wildlife adventures since 2010.</p>
+        <div style="display:flex;gap:12px;margin-top:14px;">
+          <i class="ti ti-brand-facebook" style="font-size:18px;color:#aaa;cursor:pointer" aria-hidden="true"></i>
+          <i class="ti ti-brand-twitter" style="font-size:18px;color:#aaa;cursor:pointer" aria-hidden="true"></i>
+          <i class="ti ti-brand-youtube" style="font-size:18px;color:#aaa;cursor:pointer" aria-hidden="true"></i>
+          <i class="ti ti-brand-instagram" style="font-size:18px;color:#aaa;cursor:pointer" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Destinations</a></li>
+          <li><a href="#">Day Trips</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="#">Serengeti</a></li>
+          <li><a href="#">Ngorongoro</a></li>
+          <li><a href="#">Tarangire</a></li>
+          <li><a href="#">Kilimanjaro</a></li>
+          <li><a href="#">Zanzibar</a></li>
+          <li><a href="#">Lake Manyara</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p style="color:#aaa;margin-bottom:8px"><i class="ti ti-phone" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>+255 762 268 845</p>
+        <p style="color:#aaa;margin-bottom:8px"><i class="ti ti-phone" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>+255 679 268 845</p>
+        <p style="color:#aaa;margin-bottom:8px"><i class="ti ti-mail" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>info@eugentanzaniasafaris.com</p>
+        <p style="color:#aaa"><i class="ti ti-map-pin" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>Dar es Salaam, Tanzania</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eugen Tanzania Safaris Limited. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp FAB -->
+  <div class="whatsapp-fab" title="Chat on WhatsApp">
+    <i class="ti ti-brand-whatsapp" aria-label="Chat on WhatsApp"></i>
+  </div>
+</div>
+
+<script>
+  let current = 0;
+  const total = 3;
+  function updateSlider() {
+    document.getElementById('heroSlides').style.transform = `translateX(-${current * 33.333}%)`;
+    document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  function changeSlide(dir) {
+    current = (current + dir + total) % total;
+    updateSlider();
+  }
+  function goSlide(i) {
+    current = i;
+    updateSlider();
+  }
+  setInterval(() => changeSlide(1), 5000);
+</script>
